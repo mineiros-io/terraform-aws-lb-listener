@@ -13,8 +13,8 @@ This example shows how to ...
 ### Cloning the repository
 
 ```bash
-git clone https://github.com/mineiros-io/terraform-module-template.git
-cd terraform-module-template/examples/example
+git clone https://github.com/mineiros-io/terraform-aws-lb-listener.git
+cd terraform-aws-lb-listener/examples/example
 ```
 
 ### Initializing Terraform
@@ -39,11 +39,11 @@ cd terraform-module-template/examples/example
 
 <!-- markdown-link-check-disable -->
 
-[main.tf]: https://github.com/mineiros-io/terraform-module-template/blob/master/examples/example/main.tf
+[main.tf]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/master/examples/example/main.tf
 
 <!-- markdown-link-check-enable -->
 
-[homepage]: https://mineiros.io/?ref=terraform-module-template
+[homepage]: https://mineiros.io/?ref=terraform-aws-lb-listener
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
 [badge-terraform]: https://img.shields.io/badge/Terraform-1.x-623CE4.svg?logo=terraform
 
