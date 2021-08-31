@@ -16,7 +16,7 @@ terraform {
       source = "hashicorp/aws"
       # always test with exact version to catch unsupported blocks/arguments early
       # this should match the minimal version in versions.tf
-      version = "3.36.0"
+      version = "3.40.0"
     }
   }
 }
