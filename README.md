@@ -6,7 +6,7 @@
 [![AWS Provider Version][badge-tf-aws]][releases-aws-provider]
 [![Join Slack][badge-slack]][slack]
 
-# terraform-module-template
+# terraform-aws-lb-listener
 
 A [Terraform] base module for [Amazon Web Services (AWS)][aws].
 
@@ -14,7 +14,7 @@ A [Terraform] base module for [Amazon Web Services (AWS)][aws].
 and is compatible with the Terraform AWS Provider version 3._**
 
 <!--
-Version [0.y.z](https://github.com/mineiros-io/terraform-module-template/tree/v0.0.2) of this module is the last to support Terraform version 0.15, 0.14, 0.13 and 0.12.20+ and Terraform AWS provider 3.x and 2.x.
+Version [0.y.z](https://github.com/mineiros-io/terraform-aws-lb-listener/tree/v0.0.2) of this module is the last to support Terraform version 0.15, 0.14, 0.13 and 0.12.20+ and Terraform AWS provider 3.x and 2.x.
 -->
 
 This module is part of our Infrastructure as Code (IaC) framework
@@ -71,8 +71,8 @@ These are some of our custom features:
 Most basic usage just setting required arguments:
 
 ```hcl
-module "terraform-module-template" {
-  source = "git@github.com:mineiros-io/terraform-module-template.git?ref=v0.0.1"
+module "terraform-aws-lb-listener" {
+  source = "git@github.com:mineiros-io/terraform-aws-lb-listener.git?ref=v0.0.1"
 }
 ```
 
@@ -245,24 +245,24 @@ Copyright &copy; 2020-2021 [Mineiros GmbH][homepage]
 
 <!-- References -->
 
-[homepage]: https://mineiros.io/?ref=terraform-module-template
+[homepage]: https://mineiros.io/?ref=terraform-aws-lb-listener
 [hello@mineiros.io]: mailto:hello@mineiros.io
 
 <!-- markdown-link-check-disable -->
 
-[badge-build]: https://github.com/mineiros-io/terraform-module-template/workflows/Tests/badge.svg
+[badge-build]: https://github.com/mineiros-io/terraform-aws-lb-listener/workflows/Tests/badge.svg
 
 <!-- markdown-link-check-enable -->
 
-[badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-module-template.svg?label=latest&sort=semver
+[badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-aws-lb-listener.svg?label=latest&sort=semver
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
 [badge-terraform]: https://img.shields.io/badge/Terraform-1.x-623CE4.svg?logo=terraform
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
 
 <!-- markdown-link-check-disable -->
 
-[build-status]: https://github.com/mineiros-io/terraform-module-template/actions
-[releases-github]: https://github.com/mineiros-io/terraform-module-template/releases
+[build-status]: https://github.com/mineiros-io/terraform-aws-lb-listener/actions
+[releases-github]: https://github.com/mineiros-io/terraform-aws-lb-listener/releases
 
 <!-- markdown-link-check-enable -->
 
@@ -277,12 +277,12 @@ Copyright &copy; 2020-2021 [Mineiros GmbH][homepage]
 
 <!-- markdown-link-check-disable -->
 
-[variables.tf]: https://github.com/mineiros-io/terraform-module-template/blob/master/variables.tf
-[examples/]: https://github.com/mineiros-io/terraform-module-template/blob/master/examples
-[issues]: https://github.com/mineiros-io/terraform-module-template/issues
-[license]: https://github.com/mineiros-io/terraform-module-template/blob/master/LICENSE
-[makefile]: https://github.com/mineiros-io/terraform-module-template/blob/master/Makefile
-[pull requests]: https://github.com/mineiros-io/terraform-module-template/pulls
-[contribution guidelines]: https://github.com/mineiros-io/terraform-module-template/blob/master/CONTRIBUTING.md
+[variables.tf]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/master/variables.tf
+[examples/]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/master/examples
+[issues]: https://github.com/mineiros-io/terraform-aws-lb-listener/issues
+[license]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/master/LICENSE
+[makefile]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/master/Makefile
+[pull requests]: https://github.com/mineiros-io/terraform-aws-lb-listener/pulls
+[contribution guidelines]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/master/CONTRIBUTING.md
 
 <!-- markdown-link-check-enable -->

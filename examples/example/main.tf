@@ -4,8 +4,8 @@
 # And some more meaningful information.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-module "terraform-module-template" {
-  source = "git@github.com:mineiros-io/terraform-module-template.git?ref=v0.0.1"
+module "terraform-aws-lb-listener" {
+  source = "git@github.com:mineiros-io/terraform-aws-lb-listener.git?ref=v0.0.1"
 
   # All required module arguments
 
