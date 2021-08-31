@@ -27,7 +27,8 @@ provider "aws" {
 module "test" {
   source = "../.."
 
-  module_enabled = false
+  module_enabled    = false
+  load_balancer_arn = "arn:aws:elasticloadbalancing:eu-central-1:000000000000:loadbalancer/noneexisting/693cde619b7f6727"
 
   # add all required arguments
 
