@@ -165,6 +165,13 @@ variable "default_action" {
 
   # })
   description = "(Required) Configuration block for default actions."
+  default = {
+    fixed_response = {
+      content_type = "plain/text"
+      message_body = "Nothing to see here!"
+      status_code  = 418
+    }
+  }
 }
 
 variable "tags" {
