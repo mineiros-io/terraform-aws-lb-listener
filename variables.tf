@@ -25,7 +25,7 @@ variable "protocol" {
   default     = null
 
   validation {
-    condition     = var.protocol == null || contains(["HTTP", "HTTPS", "TCP", "TLS", "UDP", "TCP_UDP"], var.protocol)
+    condition     = var.protocol == null ? true : contains(["HTTP", "HTTPS", "TCP", "TLS", "UDP", "TCP_UDP"], var.protocol)
     error_message = "The 'protocol' variable should be set to one of either: 'HTTP', 'HTTPS', 'TCP', 'TLS', 'UDP' or 'TCP_UDP'."
   }
 }
