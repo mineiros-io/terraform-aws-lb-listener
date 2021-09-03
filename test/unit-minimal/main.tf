@@ -16,7 +16,7 @@ terraform {
       source = "hashicorp/aws"
       # always test with exact version to catch unsupported blocks/arguments early
       # this should match the minimal version in versions.tf
-      version = "3.0.0"
+      version = "3.40.0"
     }
   }
 }
@@ -25,9 +25,29 @@ provider "aws" {
   region = var.aws_region
 }
 
+resource "aws_default_vpc" "default" {
+}
+
+data "aws_subnet_ids" "default" {
+  vpc_id = aws_default_vpc.default.id
+}
+
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_default_vpc.default.id
+}
+
+resource "aws_lb" "lb" {
+  internal           = false
+  load_balancer_type = "application"
+
+  security_groups = [aws_default_security_group.default]
+  subnets         = data.aws_subnet_ids.default
+}
+
 # DO NOT RENAME MODULE NAME
 module "test" {
-  source = "../.."
+  source            = "../.."
+  load_balancer_arn = aws_lb.lb.arn
 
   # add only required arguments and no optional arguments
 }

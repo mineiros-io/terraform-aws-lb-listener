@@ -23,11 +23,31 @@ provider "aws" {
   region = var.aws_region
 }
 
+resource "aws_default_vpc" "default" {
+}
+
+data "aws_subnet_ids" "default" {
+  vpc_id = aws_default_vpc.default.id
+}
+
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_default_vpc.default.id
+}
+
+resource "aws_lb" "lb" {
+  internal           = false
+  load_balancer_type = "application"
+
+  security_groups = [aws_default_security_group.default]
+  subnets         = data.aws_subnet_ids.default
+}
+
 # DO NOT RENAME MODULE NAME
 module "test" {
   source = "../.."
 
-  module_enabled = true
+  module_enabled    = true
+  load_balancer_arn = aws_lb.lb.arn
 
   # add all required arguments
 
