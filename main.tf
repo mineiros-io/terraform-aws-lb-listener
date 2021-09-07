@@ -10,43 +10,76 @@ resource "aws_lb_listener" "listener" {
   ssl_policy      = var.protocol == "HTTPS" || var.protocol == "TLS" ? var.ssl_policy : null
   certificate_arn = var.certificate_arn
 
+  # Enable Cognito auth
+  dynamic "default_action" {
+    for_each = try([var.default_action.authenticate_cognito], [])
+    iterator = authenticate_cognito
+
+    content {
+      type = "authenticate-cognito"
+
+      authenticate_cognito {
+        user_pool_arn       = authenticate_cognito.value.user_pool_arn
+        user_pool_domain    = authenticate_cognito.value.user_pool_domain
+        user_pool_client_id = authenticate_cognito.value.user_pool_client_id
+
+        authentication_request_extra_params = try(authenticate_cognito.value.authentication_request_extra_params, null)
+        on_unauthenticated_request          = try(authenticate_cognito.value.on_unauthenticated_request, null)
+        scope                               = try(authenticate_cognito.value.scope, null)
+        session_cookie_name                 = try(authenticate_cognito.value.session_cookie_name, null)
+        session_timeout                     = try(authenticate_cognito.value.session_timeout, null)
+      }
+    }
+  }
+
+  # Enable OIDC auth
+  dynamic "default_action" {
+    for_each = try([var.default_action.authenticate_oidc], [])
+    iterator = authenticate_oidc
+
+    content {
+      type = "authenticate-oidc"
+
+      authenticate_oidc {
+        authorization_endpoint = authenticate_oidc.value.authorization_endpoint
+        client_id              = authenticate_oidc.value.client_id
+        client_secret          = authenticate_oidc.value.client_secret
+        issuer                 = authenticate_oidc.value.issuer
+
+        authentication_request_extra_params = try(authenticate_oidc.value.authentication_request_extra_params, null)
+        on_unauthenticated_request          = try(authenticate_oidc.value.on_unauthenticated_request, null)
+        scope                               = try(authenticate_oidc.value.scope, null)
+        session_cookie_name                 = try(authenticate_oidc.value.session_cookie_name, null)
+        session_timeout                     = try(authenticate_oidc.value.session_timeout, null)
+
+        token_endpoint     = authenticate_oidc.value.token_endpoint
+        user_info_endpoint = authenticate_oidc.value.user_info_endpoint
+      }
+    }
+  }
+
+  # Add a single default action
   default_action {
     type             = var.default_action.type
     target_group_arn = var.default_action.type == "forward" ? try(var.default_action.target_group_arn, null) : null
     order            = try(var.default_action.order, null)
 
-    dynamic "authenticate_cognito" {
-      for_each = var.default_action.type == "authenticate_cognito" ? ["enable_authenticate_cognito"] : []
-
-      content {
-        user_pool_arn       = var.default_action.authenticate_cognito.user_pool_arn
-        user_pool_domain    = var.default_action.authenticate_cognito.user_pool_domain
-        user_pool_client_id = var.default_action.authenticate_cognito.user_pool_client_id
-
-        authentication_request_extra_params = try(var.default_action.authenticate_cognito.authentication_request_extra_params, null)
-        on_unauthenticated_request          = try(var.default_action.authenticate_cognito.on_unauthenticated_request, null)
-        scope                               = try(var.default_action.authenticate_cognito.scope, null)
-        session_cookie_name                 = try(var.default_action.authenticate_cognito.session_cookie_name, null)
-        session_timeout                     = try(var.default_action.authenticate_cognito.session_timeout, null)
-      }
-    }
-
     dynamic "fixed_response" {
-      for_each = var.default_action.type == "fixed-response" ? ["enable_fixed_response"] : []
+      for_each = try([var.default_action.fixed_response], [])
 
       content {
-        content_type = var.default_action.fixed_response.content_type
-        message_body = try(var.default_action.fixed_response.message_body, null)
-        status_code  = try(var.default_action.fixed_response.status_code, null)
+        content_type = fixed_response.value.content_type
+        message_body = try(fixed_response.value.message_body, null)
+        status_code  = try(fixed_response.value.status_code, null)
       }
     }
 
     dynamic "forward" {
-      for_each = try(var.default_action.forward, null) != null ? ["enable_forward"] : []
+      for_each = try([var.default_action.forward], [])
 
       content {
         dynamic "target_group" {
-          for_each = var.default_action.forward.target_group
+          for_each = forward.value.target_group
 
           content {
             arn    = target_group.value.arn
@@ -55,26 +88,26 @@ resource "aws_lb_listener" "listener" {
         }
 
         dynamic "stickiness" {
-          for_each = try(var.default_action.forward.stickiness, null) != null ? ["enable_stickiness"] : []
+          for_each = try([forward.value.stickiness], [])
 
           content {
-            duration = var.default_action.stickiness.duration
-            enabled  = try(var.default_action.stickiness.enabled, false)
+            duration = stickiness.value.duration
+            enabled  = try(stickiness.value.enabled, false)
           }
         }
       }
     }
 
     dynamic "redirect" {
-      for_each = try(var.default_action.redirect, null) != null ? ["enable_redirect"] : []
+      for_each = try([var.default_action.redirect], [])
 
       content {
-        status_code = try(var.default_action.redirect.status_code, "HTTP_302")
-        host        = try(var.default_action.redirect.host, "#{host}")
-        path        = try(var.default_action.redirect.path, "/#{path}")
-        port        = try(var.default_action.redirect.port, "#{port}")
-        protocol    = try(var.default_action.redirect.protocol, "#{protocol}")
-        query       = try(var.default_action.redirect.query, "#{query}")
+        status_code = try(redirect.value.status_code, "HTTP_302")
+        host        = try(redirect.value.host, "#{host}")
+        path        = try(redirect.value.path, "/#{path}")
+        port        = try(redirect.value.port, "#{port}")
+        protocol    = try(redirect.value.protocol, "#{protocol}")
+        query       = try(redirect.value.query, "#{query}")
       }
     }
   }
