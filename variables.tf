@@ -62,7 +62,7 @@ variable "additional_certificates_arns" {
 variable "default_action" {
   type = any
   # type = object({
-  #   # (Required) Type of routing action. Valid values are 'forward', 'redirect', 'fixed-response', 'authenticate-cognito' and 'authenticate-oidc'.
+  #   # (Required) Type of routing action. Valid values are 'forward', 'redirect', 'fixed-response'.
   #   type = string
   #   # (Optional) Order for the action. This value is required for rules with multiple actions. The action with the lowest value for order is performed first. Valid values are between 1 and 50000.
   #   order = optional(number)
