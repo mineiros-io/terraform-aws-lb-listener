@@ -73,7 +73,7 @@ resource "aws_lb_listener_rule" "lb_listener_rule" {
 
       content {
         dynamic "target_group" {
-          for_each = forward.value.target_group
+          for_each = forward.value.target_groups
 
           content {
             arn    = target_group.value.arn

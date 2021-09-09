@@ -29,7 +29,7 @@ variable "action" {
 
   #   forward = optional(object({
   #     # (Required) Set of 1-5 target group blocks.
-  #     target_group = list(object({
+  #     target_groups = list(object({
   #       # (Required) ARN of the target group.
   #       arn = string
   #       # (Optional) Weight. The range is 0 to 999.
