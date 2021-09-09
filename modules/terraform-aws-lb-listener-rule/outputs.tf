@@ -8,7 +8,7 @@
 
 output "lb_listener_rule" {
   description = "All outputs of the created 'aws_lb_listener_rule' resource."
-  value       = try(aws_lb_listener_rule.lb_listener_rule[0], {})
+  value       = one(aws_lb_listener_rule.lb_listener_rule)
 }
 
 # ----------------------------------------------------------------------------------------------------------------------
