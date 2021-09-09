@@ -61,7 +61,7 @@ resource "aws_lb_listener" "listener" {
   # Add a single default action
   default_action {
     type             = var.default_action.type
-    target_group_arn = var.default_action.type == "forward" ? try(var.default_action.target_group_arn, null) : null
+    target_group_arn = try(var.default_action.target_group_arn, null)
     order            = try(var.default_action.order, null)
 
     dynamic "fixed_response" {
