@@ -6,19 +6,9 @@
 # OUTPUT ALL RESOURCES AS FULL OBJECTS
 # ----------------------------------------------------------------------------------------------------------------------
 
-output "lb_listener" {
-  description = "All outputs of the created 'aws_lb_listener' resource."
-  value       = one(aws_lb_listener.listener)
-}
-
-output "rules" {
-  description = "A map of all outputs of the resources created in the 'terraform-aws-lb-listener-rule' modules keyed by id."
-  value       = module.lb_listener_rule
-}
-
-output "certificates" {
-  description = "All outputs of the created 'aws_lb_listener_certificate' resources."
-  value       = try(aws_lb_listener_certificate.certificate, {})
+output "lb_listener_rule" {
+  description = "All outputs of the created 'aws_lb_listener_rule' resource."
+  value       = one(aws_lb_listener_rule.lb_listener_rule)
 }
 
 # ----------------------------------------------------------------------------------------------------------------------

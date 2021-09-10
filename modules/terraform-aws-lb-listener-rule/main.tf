@@ -1,18 +1,13 @@
-resource "aws_lb_listener" "listener" {
+resource "aws_lb_listener_rule" "lb_listener_rule" {
   count = var.module_enabled ? 1 : 0
 
-  load_balancer_arn = var.load_balancer_arn
+  listener_arn = var.listener_arn
 
-  port        = var.port
-  protocol    = var.protocol
-  alpn_policy = var.protocol == "TLS" ? var.alpn_policy : null
-
-  ssl_policy      = var.protocol == "HTTPS" || var.protocol == "TLS" ? var.ssl_policy : null
-  certificate_arn = var.certificate_arn
+  priority = var.priority
 
   # Enable Cognito auth
-  dynamic "default_action" {
-    for_each = try([var.default_action.authenticate_cognito], [])
+  dynamic "action" {
+    for_each = var.authenticate_cognito != null ? [var.authenticate_cognito] : []
     iterator = authenticate_cognito
 
     content {
@@ -33,8 +28,8 @@ resource "aws_lb_listener" "listener" {
   }
 
   # Enable OIDC auth
-  dynamic "default_action" {
-    for_each = try([var.default_action.authenticate_oidc], [])
+  dynamic "action" {
+    for_each = var.authenticate_oidc != null ? [var.authenticate_oidc] : []
     iterator = authenticate_oidc
 
     content {
@@ -58,24 +53,23 @@ resource "aws_lb_listener" "listener" {
     }
   }
 
-  # Add a single default action
-  default_action {
-    type             = var.default_action.type
-    target_group_arn = try(var.default_action.target_group_arn, null)
-    order            = try(var.default_action.order, null)
+  # Add a single action
+  action {
+    type             = var.action.type
+    target_group_arn = try(var.action.target_group_arn, null)
 
     dynamic "fixed_response" {
-      for_each = try([var.default_action.fixed_response], [])
+      for_each = try([var.action.fixed_response], [])
 
       content {
-        content_type = fixed_response.value.content_type
         message_body = try(fixed_response.value.message_body, null)
+        content_type = fixed_response.value.content_type
         status_code  = try(fixed_response.value.status_code, null)
       }
     }
 
     dynamic "forward" {
-      for_each = try([var.default_action.forward], [])
+      for_each = try([var.action.forward], [])
 
       content {
         dynamic "target_group" {
@@ -99,7 +93,7 @@ resource "aws_lb_listener" "listener" {
     }
 
     dynamic "redirect" {
-      for_each = try([var.default_action.redirect], [])
+      for_each = try([var.action.redirect], [])
 
       content {
         status_code = try(redirect.value.status_code, "HTTP_302")
@@ -112,19 +106,66 @@ resource "aws_lb_listener" "listener" {
     }
   }
 
+  dynamic "condition" {
+    for_each = var.conditions
+
+    content {
+      dynamic "host_header" {
+        for_each = try([condition.value.host_header], [])
+
+        content {
+          values = host_header.value.values
+        }
+      }
+
+      dynamic "http_header" {
+        for_each = try([condition.value.http_header], [])
+
+        content {
+          http_header_name = http_header.value.http_header_name
+          values           = http_header.value.values
+        }
+      }
+
+      dynamic "http_request_method" {
+        for_each = try([condition.value.http_request_method], [])
+
+        content {
+          values = http_request_method.value.values
+        }
+      }
+
+      dynamic "path_pattern" {
+        for_each = try([condition.value.path_pattern], [])
+
+        content {
+          values = path_pattern.value.values
+        }
+      }
+
+      dynamic "query_string" {
+        for_each = try([condition.value.query_string], [])
+
+        content {
+          key   = try(query_string.value.key, null)
+          value = query_string.value.value
+        }
+      }
+
+      dynamic "source_ip" {
+        for_each = try([condition.value.source_ip], [])
+
+        content {
+          values = source_ip.value.values
+        }
+      }
+    }
+  }
+
   lifecycle {
     create_before_destroy = true
   }
 
   tags       = merge(var.module_tags, var.tags)
-  depends_on = [var.module_depends_on]
-}
-
-resource "aws_lb_listener_certificate" "certificate" {
-  for_each = var.module_enabled ? var.additional_certificates_arns : []
-
-  listener_arn    = aws_lb_listener.listener[0].arn
-  certificate_arn = each.value
-
   depends_on = [var.module_depends_on]
 }
