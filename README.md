@@ -181,17 +181,18 @@ The following attributes are exported in the outputs of the module:
 
 ## External Documentation
 
-- AWS Documentation IAM:
+### AWS Documentation IAM
 
-  - Roles: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html
-  - Policies: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html
-  - Instance Profile: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html
+- https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html
+- https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html
+- https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html
 
-- Terraform AWS Provider Documentation:
-  - https://www.terraform.io/docs/providers/aws/r/iam_role.html
-  - https://www.terraform.io/docs/providers/aws/r/iam_role_policy.html
-  - https://www.terraform.io/docs/providers/aws/r/iam_role_policy_attachment.html
-  - https://www.terraform.io/docs/providers/aws/r/iam_instance_profile.html
+### Terraform AWS Provider Documentation
+
+- https://www.terraform.io/docs/providers/aws/r/iam_role.html
+- https://www.terraform.io/docs/providers/aws/r/iam_role_policy.html
+- https://www.terraform.io/docs/providers/aws/r/iam_role_policy_attachment.html
+- https://www.terraform.io/docs/providers/aws/r/iam_instance_profile.html
 
 ## Module Versioning
 
@@ -270,19 +271,19 @@ Copyright &copy; 2020-2021 [Mineiros GmbH][homepage]
 [badge-tf-aws]: https://img.shields.io/badge/AWS-3-F8991D.svg?logo=terraform
 [releases-aws-provider]: https://github.com/terraform-providers/terraform-provider-aws/releases
 [apache20]: https://opensource.org/licenses/Apache-2.0
-[slack]: https://join.slack.com/t/mineiros-community/shared_invite/zt-ehidestg-aLGoIENLVs6tvwJ11w9WGg
+[slack]: https://mineiros.io/slack
 [terraform]: https://www.terraform.io
 [aws]: https://aws.amazon.com/
 [semantic versioning (semver)]: https://semver.org/
 
 <!-- markdown-link-check-disable -->
 
-[variables.tf]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/master/variables.tf
-[examples/]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/master/examples
+[variables.tf]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/main/variables.tf
+[examples/]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/main/examples
 [issues]: https://github.com/mineiros-io/terraform-aws-lb-listener/issues
-[license]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/master/LICENSE
-[makefile]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/master/Makefile
+[license]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/main/LICENSE
+[makefile]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/main/Makefile
 [pull requests]: https://github.com/mineiros-io/terraform-aws-lb-listener/pulls
-[contribution guidelines]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/master/CONTRIBUTING.md
+[contribution guidelines]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/main/CONTRIBUTING.md
 
 <!-- markdown-link-check-enable -->

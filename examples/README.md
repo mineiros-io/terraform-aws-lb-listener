@@ -12,7 +12,7 @@
 <!-- References -->
 <!-- markdown-link-check-disable -->
 
-[example/]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/master/examples/example
+[example/]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/main/examples/example
 
 <!-- markdown-link-check-enable -->
 
@@ -30,4 +30,4 @@
 
 [releases-terraform]: https://github.com/hashicorp/terraform/releases
 [apache20]: https://opensource.org/licenses/Apache-2.0
-[slack]: https://join.slack.com/t/mineiros-community/shared_invite/zt-ehidestg-aLGoIENLVs6tvwJ11w9WGg
+[slack]: https://mineiros.io/slack
