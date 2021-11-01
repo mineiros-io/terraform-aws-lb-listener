@@ -39,7 +39,7 @@ cd terraform-aws-lb-listener/examples/example
 
 <!-- markdown-link-check-disable -->
 
-[main.tf]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/master/examples/example/main.tf
+[main.tf]: https://github.com/mineiros-io/terraform-aws-lb-listener/blob/main/examples/example/main.tf
 
 <!-- markdown-link-check-enable -->
 
@@ -49,5 +49,5 @@ cd terraform-aws-lb-listener/examples/example
 
 [releases-terraform]: https://github.com/hashicorp/terraform/releases
 [apache20]: https://opensource.org/licenses/Apache-2.0
-[slack]: https://join.slack.com/t/mineiros-community/shared_invite/zt-ehidestg-aLGoIENLVs6tvwJ11w9WGg
+[slack]: https://mineiros.io/slack
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
