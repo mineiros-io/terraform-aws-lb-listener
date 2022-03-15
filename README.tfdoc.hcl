@@ -37,7 +37,7 @@ section {
   title   = "terraform-aws-lb-listener"
   toc     = true
   content = <<-END
-    A [Terraform] module to create and manage a
+    A [Terraform] module to create and manage an
     [Application Load Balancer Listener](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-listeners.html)
     on [Amazon Web Services (AWS)][aws].
 
@@ -393,8 +393,8 @@ section {
             it must be the same target group specified in `target_group_arn`.
           END
 
-          attribute "target_group" {
-            type        = set(target_goup)
+          attribute "target_groups" {
+            type        = set(target_group)
             description = <<-END
               Set of 1-5 target group blocks. 
             END
@@ -459,7 +459,7 @@ section {
 
           attribute "host" {
             type        = string
-            default     = "HTTP_302"
+            default     = "{host}"
             description = <<-END
               Hostname. This component is not percent-encoded. The hostname can
               contain `#{host}`.
@@ -468,7 +468,7 @@ section {
 
           attribute "path" {
             type        = string
-            default     = "#{host}"
+            default     = "#{path}"
             description = <<-END
               Absolute path, starting with the leading `"/"`. This component is
               not percent-encoded. The path can contain `#{host}`, `#{path}`,
@@ -521,6 +521,14 @@ section {
         description = <<-END
           A list of rules to be attached to the created listener.
         END
+
+        attribute "id" {
+          required    = true
+          type        = string
+          description = <<-END
+            A unique identifier for the rule
+          END
+        }
 
         attribute "priority" {
           required    = true
@@ -606,8 +614,8 @@ section {
               it must be the same target group specified in `target_group_arn`.
             END
 
-            attribute "target_group" {
-              type        = set(target_goup)
+            attribute "target_groups" {
+              type        = set(target_group)
               description = <<-END
                 Set of 1-5 target group blocks. 
               END
@@ -672,7 +680,7 @@ section {
 
             attribute "host" {
               type        = string
-              default     = "HTTP_302"
+              default     = "#{host}"
               description = <<-END
                 Hostname. This component is not percent-encoded. The hostname can
                 contain `#{host}`.
@@ -681,7 +689,7 @@ section {
 
             attribute "path" {
               type        = string
-              default     = "#{host}"
+              default     = "#{path}"
               description = <<-END
                 Absolute path, starting with the leading `"/"`. This component is
                 not percent-encoded. The path can contain `#{host}`, `#{path}`,
@@ -726,7 +734,6 @@ section {
 
           attribute "host_header" {
             type        = object(host_header)
-            default     = []
             description = <<-END
               The maximum size of each pattern is 128 characters. Comparison is
               case insensitive. Wildcard characters supported: `*` (matches 0 or
@@ -739,6 +746,41 @@ section {
               type        = set(string)
               description = <<-END
                 List of host header patterns to match.
+              END
+            }
+          }
+
+          attribute "http_header" {
+            type        = object(http_header)
+            description = <<-END
+              HTTP headers to match. 
+            END
+
+            attribute "http_header_name" {
+              required    = true
+              type        = string
+              description = <<-END
+                Name of HTTP header to search. The maximum size is 40
+                characters. Comparison is case insensitive. Only RFC7240
+                characters are supported. Wildcards are not supported. You
+                cannot use HTTP header condition to specify the host header,
+                use a `host-header` condition instead.
+              END
+            }
+
+            attribute "values" {
+              required    = true
+              type        = set(string)
+              description = <<-END
+                List of header value patterns to match. Maximum size of each
+                pattern is 128 characters. Comparison is case insensitive.
+                Wildcard characters supported: `*` (matches 0 or more
+                characters) and `?` (matches exactly 1 character). If the same
+                header appears multiple times in the request they will be
+                searched in order until a match is found. Only one pattern
+                needs to match for the condition to be satisfied. To require
+                that all of the strings are a match, create one condition block
+                per string.
               END
             }
           }
@@ -867,7 +909,7 @@ section {
             type        = map(string)
             description = <<-END
               Query parameters to include in the redirect request to the
-              authorization endpoint. Max: 10.
+              authorization endpoint. Accepts a maximum of 10 extra parameters.
             END
           }
 

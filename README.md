@@ -8,7 +8,7 @@
 
 # terraform-aws-lb-listener
 
-A [Terraform] module to create and manage a
+A [Terraform] module to create and manage an
 [Application Load Balancer Listener](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-listeners.html)
 on [Amazon Web Services (AWS)][aws].
 
@@ -262,17 +262,17 @@ See [variables.tf] and [examples/] for details and use-cases.
 
     The `forward` object accepts the following attributes:
 
-    - [**`target_group`**](#attr-default_action-forward-target_group): *(Optional `set(target_goup)`)*<a name="attr-default_action-forward-target_group"></a>
+    - [**`target_groups`**](#attr-default_action-forward-target_groups): *(Optional `set(target_group)`)*<a name="attr-default_action-forward-target_groups"></a>
 
       Set of 1-5 target group blocks.
 
-      Each `target_goup` object in the set accepts the following attributes:
+      Each `target_group` object in the set accepts the following attributes:
 
-      - [**`arn`**](#attr-default_action-forward-target_group-arn): *(**Required** `string`)*<a name="attr-default_action-forward-target_group-arn"></a>
+      - [**`arn`**](#attr-default_action-forward-target_groups-arn): *(**Required** `string`)*<a name="attr-default_action-forward-target_groups-arn"></a>
 
         ARN of the target group.
 
-      - [**`weight`**](#attr-default_action-forward-target_group-weight): *(Optional `number`)*<a name="attr-default_action-forward-target_group-weight"></a>
+      - [**`weight`**](#attr-default_action-forward-target_groups-weight): *(Optional `number`)*<a name="attr-default_action-forward-target_groups-weight"></a>
 
         Weight. The range is `0` to `999`.
 
@@ -313,7 +313,7 @@ See [variables.tf] and [examples/] for details and use-cases.
       Hostname. This component is not percent-encoded. The hostname can
       contain `#{host}`.
 
-      Default is `"HTTP_302"`.
+      Default is `"{host}"`.
 
     - [**`path`**](#attr-default_action-redirect-path): *(Optional `string`)*<a name="attr-default_action-redirect-path"></a>
 
@@ -321,7 +321,7 @@ See [variables.tf] and [examples/] for details and use-cases.
       not percent-encoded. The path can contain `#{host}`, `#{path}`,
       and `#{port}`.
 
-      Default is `"#{host}"`.
+      Default is `"#{path}"`.
 
     - [**`port`**](#attr-default_action-redirect-port): *(Optional `string`)*<a name="attr-default_action-redirect-port"></a>
 
@@ -357,6 +357,10 @@ See [variables.tf] and [examples/] for details and use-cases.
   Default is `[]`.
 
   Each `rule` object in the list accepts the following attributes:
+
+  - [**`id`**](#attr-rules-id): *(**Required** `string`)*<a name="attr-rules-id"></a>
+
+    A unique identifier for the rule
 
   - [**`priority`**](#attr-rules-priority): *(**Required** `number`)*<a name="attr-rules-priority"></a>
 
@@ -414,17 +418,17 @@ See [variables.tf] and [examples/] for details and use-cases.
 
       The `forward` object accepts the following attributes:
 
-      - [**`target_group`**](#attr-rules-action-forward-target_group): *(Optional `set(target_goup)`)*<a name="attr-rules-action-forward-target_group"></a>
+      - [**`target_groups`**](#attr-rules-action-forward-target_groups): *(Optional `set(target_group)`)*<a name="attr-rules-action-forward-target_groups"></a>
 
         Set of 1-5 target group blocks.
 
-        Each `target_goup` object in the set accepts the following attributes:
+        Each `target_group` object in the set accepts the following attributes:
 
-        - [**`arn`**](#attr-rules-action-forward-target_group-arn): *(**Required** `string`)*<a name="attr-rules-action-forward-target_group-arn"></a>
+        - [**`arn`**](#attr-rules-action-forward-target_groups-arn): *(**Required** `string`)*<a name="attr-rules-action-forward-target_groups-arn"></a>
 
           ARN of the target group.
 
-        - [**`weight`**](#attr-rules-action-forward-target_group-weight): *(Optional `number`)*<a name="attr-rules-action-forward-target_group-weight"></a>
+        - [**`weight`**](#attr-rules-action-forward-target_groups-weight): *(Optional `number`)*<a name="attr-rules-action-forward-target_groups-weight"></a>
 
           Weight. The range is `0` to `999`.
 
@@ -465,7 +469,7 @@ See [variables.tf] and [examples/] for details and use-cases.
         Hostname. This component is not percent-encoded. The hostname can
         contain `#{host}`.
 
-        Default is `"HTTP_302"`.
+        Default is `"#{host}"`.
 
       - [**`path`**](#attr-rules-action-redirect-path): *(Optional `string`)*<a name="attr-rules-action-redirect-path"></a>
 
@@ -473,7 +477,7 @@ See [variables.tf] and [examples/] for details and use-cases.
         not percent-encoded. The path can contain `#{host}`, `#{path}`,
         and `#{port}`.
 
-        Default is `"#{host}"`.
+        Default is `"#{path}"`.
 
       - [**`port`**](#attr-rules-action-redirect-port): *(Optional `string`)*<a name="attr-rules-action-redirect-port"></a>
 
@@ -508,13 +512,37 @@ See [variables.tf] and [examples/] for details and use-cases.
       more characters) and `?` (matches exactly 1 character). Only one
       pattern needs to match for the condition to be satisfied.
 
-      Default is `[]`.
-
       The `host_header` object accepts the following attributes:
 
       - [**`values`**](#attr-rules-conditions-host_header-values): *(**Required** `set(string)`)*<a name="attr-rules-conditions-host_header-values"></a>
 
         List of host header patterns to match.
+
+    - [**`http_header`**](#attr-rules-conditions-http_header): *(Optional `object(http_header)`)*<a name="attr-rules-conditions-http_header"></a>
+
+      HTTP headers to match.
+
+      The `http_header` object accepts the following attributes:
+
+      - [**`http_header_name`**](#attr-rules-conditions-http_header-http_header_name): *(**Required** `string`)*<a name="attr-rules-conditions-http_header-http_header_name"></a>
+
+        Name of HTTP header to search. The maximum size is 40
+        characters. Comparison is case insensitive. Only RFC7240
+        characters are supported. Wildcards are not supported. You
+        cannot use HTTP header condition to specify the host header,
+        use a `host-header` condition instead.
+
+      - [**`values`**](#attr-rules-conditions-http_header-values): *(**Required** `set(string)`)*<a name="attr-rules-conditions-http_header-values"></a>
+
+        List of header value patterns to match. Maximum size of each
+        pattern is 128 characters. Comparison is case insensitive.
+        Wildcard characters supported: `*` (matches 0 or more
+        characters) and `?` (matches exactly 1 character). If the same
+        header appears multiple times in the request they will be
+        searched in order until a match is found. Only one pattern
+        needs to match for the condition to be satisfied. To require
+        that all of the strings are a match, create one condition block
+        per string.
 
     - [**`http_request_method`**](#attr-rules-conditions-http_request_method): *(Optional `object(http_request_method)`)*<a name="attr-rules-conditions-http_request_method"></a>
 
@@ -608,7 +636,7 @@ See [variables.tf] and [examples/] for details and use-cases.
     - [**`authentication_request_extra_params`**](#attr-rules-authenticate_cognito-authentication_request_extra_params): *(Optional `map(string)`)*<a name="attr-rules-authenticate_cognito-authentication_request_extra_params"></a>
 
       Query parameters to include in the redirect request to the
-      authorization endpoint. Max: 10.
+      authorization endpoint. Accepts a maximum of 10 extra parameters.
 
     - [**`on_unauthenticated_request`**](#attr-rules-authenticate_cognito-on_unauthenticated_request): *(Optional `string`)*<a name="attr-rules-authenticate_cognito-on_unauthenticated_request"></a>
 
