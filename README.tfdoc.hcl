@@ -519,7 +519,6 @@ section {
         }
 
         attribute "priority" {
-          required    = true
           type        = number
           description = <<-END
             The priority for the rule between `1` and `50000`. Leaving it unset
