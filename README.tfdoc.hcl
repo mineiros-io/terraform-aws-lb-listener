@@ -159,14 +159,6 @@ section {
           Configuration block for default actions.
         END
 
-        attribute "type" {
-          required    = true
-          type        = string
-          description = <<-END
-            Type of routing action. Valid values are `forward`, `redirect`,
-            `fixed-response`, `authenticate-cognito` and `authenticate-oidc`.
-          END
-        }
 
         attribute "target_group_arn" {
           type        = string
@@ -188,10 +180,8 @@ section {
 
         attribute "authenticate_cognito" {
           type        = object(authenticate_cognito)
-          default     = []
           description = <<-END
             Configuration block for using Amazon Cognito to authenticate users.
-            Specify only when `type` is `authenticate-cognito`.
           END
 
           attribute "user_pool_arn" {
@@ -262,8 +252,7 @@ section {
           default     = []
           description = <<-END
             Configuration block for an identity provider that is compliant with
-            OpenID Connect (OIDC). Specify only when `type` is
-            `authenticate-oidc`.
+            OpenID Connect (OIDC).
           END
 
           attribute "authorization_endpoint" {
@@ -356,7 +345,7 @@ section {
           type        = object(fixed_response)
           description = <<-END
             Information for creating an action that returns a custom HTTP
-            response. Required if `type` is `fixed-response`.
+            response.
           END
 
           attribute "content_type" {
@@ -387,7 +376,7 @@ section {
           type        = object(forward)
           description = <<-END
             Configuration block for creating an action that distributes requests
-            among one or more target groups. Specify only if `type` is `forward`.
+            among one or more target groups.
             If you specify both `forward` block and `target_group_arn`
             attribute, you can specify only one target group using `forward` and
             it must be the same target group specified in `target_group_arn`.
@@ -444,8 +433,7 @@ section {
         attribute "redirect" {
           type        = object(redirect)
           description = <<-END
-            Configuration block for creating a redirect action. Required if
-            `type` is `redirect`.
+            Configuration block for creating a redirect action.
           END
 
           attribute "status_code" {
@@ -552,17 +540,9 @@ section {
             }
           }
           description = <<-END
-            Configuration block for default actions.
+            Configuration block for the action of the rule.
           END
 
-          attribute "type" {
-            required    = true
-            type        = string
-            description = <<-END
-              Type of routing action. Valid values are `forward`, `redirect`,
-              `fixed-response`, `authenticate-cognito` and `authenticate-oidc`.
-            END
-          }
 
           attribute "target_group_arn" {
             type        = string
@@ -608,7 +588,7 @@ section {
             type        = object(forward)
             description = <<-END
               Configuration block for creating an action that distributes requests
-              among one or more target groups. Specify only if `type` is `forward`.
+              among one or more target groups.
               If you specify both `forward` block and `target_group_arn`
               attribute, you can specify only one target group using `forward` and
               it must be the same target group specified in `target_group_arn`.
@@ -948,8 +928,7 @@ section {
           default     = []
           description = <<-END
             Configuration block for an identity provider that is compliant with
-            OpenID Connect (OIDC). Specify only when `type` is
-            `authenticate-oidc`.
+            OpenID Connect (OIDC).
           END
 
           attribute "authorization_endpoint" {
