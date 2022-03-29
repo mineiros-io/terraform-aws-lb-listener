@@ -856,7 +856,6 @@ section {
           default     = []
           description = <<-END
             Configuration block for using Amazon Cognito to authenticate users.
-            Specify only when `type` is `authenticate-cognito`.
           END
 
           attribute "user_pool_arn" {
