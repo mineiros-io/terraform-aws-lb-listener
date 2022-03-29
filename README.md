@@ -115,11 +115,6 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   The `default_action` object accepts the following attributes:
 
-  - [**`type`**](#attr-default_action-type): *(**Required** `string`)*<a name="attr-default_action-type"></a>
-
-    Type of routing action. Valid values are `forward`, `redirect`,
-    `fixed-response`, `authenticate-cognito` and `authenticate-oidc`.
-
   - [**`target_group_arn`**](#attr-default_action-target_group_arn): *(Optional `string`)*<a name="attr-default_action-target_group_arn"></a>
 
     ARN of the Target Group to which to route traffic. Specify only if
@@ -135,9 +130,6 @@ See [variables.tf] and [examples/] for details and use-cases.
   - [**`authenticate_cognito`**](#attr-default_action-authenticate_cognito): *(Optional `object(authenticate_cognito)`)*<a name="attr-default_action-authenticate_cognito"></a>
 
     Configuration block for using Amazon Cognito to authenticate users.
-    Specify only when `type` is `authenticate-cognito`.
-
-    Default is `[]`.
 
     The `authenticate_cognito` object accepts the following attributes:
 
@@ -179,8 +171,7 @@ See [variables.tf] and [examples/] for details and use-cases.
   - [**`authenticate_oidc`**](#attr-default_action-authenticate_oidc): *(Optional `object(authenticate_oidc)`)*<a name="attr-default_action-authenticate_oidc"></a>
 
     Configuration block for an identity provider that is compliant with
-    OpenID Connect (OIDC). Specify only when `type` is
-    `authenticate-oidc`.
+    OpenID Connect (OIDC).
 
     Default is `[]`.
 
@@ -235,7 +226,7 @@ See [variables.tf] and [examples/] for details and use-cases.
   - [**`fixed_response`**](#attr-default_action-fixed_response): *(Optional `object(fixed_response)`)*<a name="attr-default_action-fixed_response"></a>
 
     Information for creating an action that returns a custom HTTP
-    response. Required if `type` is `fixed-response`.
+    response.
 
     The `fixed_response` object accepts the following attributes:
 
@@ -255,7 +246,7 @@ See [variables.tf] and [examples/] for details and use-cases.
   - [**`forward`**](#attr-default_action-forward): *(Optional `object(forward)`)*<a name="attr-default_action-forward"></a>
 
     Configuration block for creating an action that distributes requests
-    among one or more target groups. Specify only if `type` is `forward`.
+    among one or more target groups.
     If you specify both `forward` block and `target_group_arn`
     attribute, you can specify only one target group using `forward` and
     it must be the same target group specified in `target_group_arn`.
@@ -296,8 +287,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   - [**`redirect`**](#attr-default_action-redirect): *(Optional `object(redirect)`)*<a name="attr-default_action-redirect"></a>
 
-    Configuration block for creating a redirect action. Required if
-    `type` is `redirect`.
+    Configuration block for creating a redirect action.
 
     The `redirect` object accepts the following attributes:
 
@@ -362,7 +352,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
     A unique identifier for the rule
 
-  - [**`priority`**](#attr-rules-priority): *(**Required** `number`)*<a name="attr-rules-priority"></a>
+  - [**`priority`**](#attr-rules-priority): *(Optional `number`)*<a name="attr-rules-priority"></a>
 
     The priority for the rule between `1` and `50000`. Leaving it unset
     will automatically set the rule with next available priority after
@@ -371,16 +361,11 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   - [**`action`**](#attr-rules-action): *(**Required** `object(action)`)*<a name="attr-rules-action"></a>
 
-    Configuration block for default actions.
+    Configuration block for the action of the rule.
 
     Default is `{"fixed_response":{"content_type":"plain/text","message_body":"Nothing to see here!","status_code":418}}`.
 
     The `action` object accepts the following attributes:
-
-    - [**`type`**](#attr-rules-action-type): *(**Required** `string`)*<a name="attr-rules-action-type"></a>
-
-      Type of routing action. Valid values are `forward`, `redirect`,
-      `fixed-response`, `authenticate-cognito` and `authenticate-oidc`.
 
     - [**`target_group_arn`**](#attr-rules-action-target_group_arn): *(Optional `string`)*<a name="attr-rules-action-target_group_arn"></a>
 
@@ -411,7 +396,7 @@ See [variables.tf] and [examples/] for details and use-cases.
     - [**`forward`**](#attr-rules-action-forward): *(Optional `object(forward)`)*<a name="attr-rules-action-forward"></a>
 
       Configuration block for creating an action that distributes requests
-      among one or more target groups. Specify only if `type` is `forward`.
+      among one or more target groups.
       If you specify both `forward` block and `target_group_arn`
       attribute, you can specify only one target group using `forward` and
       it must be the same target group specified in `target_group_arn`.
@@ -614,7 +599,6 @@ See [variables.tf] and [examples/] for details and use-cases.
   - [**`authenticate_cognito`**](#attr-rules-authenticate_cognito): *(Optional `object(authenticate_cognito)`)*<a name="attr-rules-authenticate_cognito"></a>
 
     Configuration block for using Amazon Cognito to authenticate users.
-    Specify only when `type` is `authenticate-cognito`.
 
     Default is `[]`.
 
@@ -658,8 +642,7 @@ See [variables.tf] and [examples/] for details and use-cases.
   - [**`authenticate_oidc`**](#attr-rules-authenticate_oidc): *(Optional `object(authenticate_oidc)`)*<a name="attr-rules-authenticate_oidc"></a>
 
     Configuration block for an identity provider that is compliant with
-    OpenID Connect (OIDC). Specify only when `type` is
-    `authenticate-oidc`.
+    OpenID Connect (OIDC).
 
     Default is `[]`.
 
