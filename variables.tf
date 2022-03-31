@@ -62,8 +62,6 @@ variable "additional_certificates_arns" {
 variable "default_action" {
   type = any
   # type = object({
-  #   # (Required) Type of routing action. Valid values are 'forward', 'redirect', 'fixed-response'.
-  #   type = string
   #   # (Optional) Order for the action. This value is required for rules with multiple actions. The action with the lowest value for order is performed first. Valid values are between 1 and 50000.
   #   order = optional(number)
   #   # (Optional) ARN of the Target Group to which to route traffic. Specify only if type is forward and you want to route to a single target group. To route to one or more target groups, use a forward block instead.
@@ -184,8 +182,6 @@ variable "rules" {
 
   #   # (Required) Configuration block for default actions.
   #   action = object({
-  #     # (Required) Type of routing action. Valid values are 'forward', 'redirect', 'fixed-response', 'authenticate-cognito' and 'authenticate-oidc'.
-  #     type = string
   #     # (Optional) Order for the action. This value is required for rules with multiple actions. The action with the lowest value for order is performed first. Valid values are between 1 and 50000.
   #     order = optional(number)
   #     # (Optional) ARN of the Target Group to which to route traffic. Specify only if type is forward and you want to route to a single target group. To route to one or more target groups, use a forward block instead.
@@ -302,7 +298,7 @@ variable "rules" {
   #     user_info_endpoint = string
   #   })
 
-  #   (Optional) A map of tags to apply to the 'aws_lb_listener_rule' resource. 
+  #   (Optional) A map of tags to apply to the 'aws_lb_listener_rule' resource.
   #   tags = map(string)
   # }))
   type    = any
